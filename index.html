@@ -3,215 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berlin Basketball Meisterschaft 2026</title>
+    <title>Berlin Hoops | Meisterschaft 2026</title>
     <style>
         :root {
-            --bball-orange: #ff5500;
-            --bball-glow: rgba(255, 85, 0, 0.4);
-            --court-dark: #0d0d11;
-            --court-grey: #1a1a24;
-            --text-light: #ffffff;
-            --text-muted: #8e8e9f;
+            --bball-orange: #ff6600;
+            --bball-dark: #d35400;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #7f8c8d;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--court-dark);
-            color: var(--text-light);
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
             min-height: 100vh;
-            background-image: 
-                radial-gradient(circle at 50% 30%, #1c1c28 0%, var(--court-dark) 70%),
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
-            padding-bottom: 60px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* Navigation */
+        nav {
+            background-color: var(--card-bg);
+            padding: 20px 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--bball-orange);
         }
 
-        /* Hero Header */
-        header {
-            text-align: center;
-            padding: 60px 0 40px 0;
-            position: relative;
-        }
-
-        header h1 {
-            font-family: 'Impact', 'Arial Black', sans-serif;
-            font-size: 3.5rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--text-light);
-            text-shadow: 0 0 15px var(--bball-glow), 3px 3px 0px var(--bball-orange);
-            margin-bottom: 10px;
-        }
-
-        header .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--bball-orange), #ff2200);
-            color: white;
-            padding: 6px 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px var(--bball-glow);
-            letter-spacing: 1px;
-        }
-
-        /* Anzeigetafel */
-        .scoreboard-wrapper {
-            background-color: var(--court-grey);
-            border: 2px solid #2d2d3f;
-            border-top: 4px solid var(--bball-orange);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 20px rgba(255, 85, 0, 0.05);
-            margin-bottom: 40px;
-        }
-
-        .scoreboard-title {
+        .logo {
             font-family: 'Impact', sans-serif;
             font-size: 1.8rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .logo span { color: var(--bball-orange); }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-left: 25px;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--bball-orange); }
+
+        /* Hero Bereich (Präsenz!) */
+        .hero {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .hero-badge {
+            background-color: rgba(255, 102, 0, 0.1);
+            color: var(--bball-dark);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 20px;
-            color: var(--bball-orange);
-            border-bottom: 1px solid #2d2d3f;
-            padding-bottom: 10px;
-            text-align: center;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th {
-            font-weight: 600;
+        .hero h1 {
+            font-family: 'Impact', sans-serif;
+            font-size: 4.5rem;
             text-transform: uppercase;
-            font-size: 0.85rem;
+            color: var(--text-dark);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
             color: var(--text-muted);
-            padding: 12px 16px;
-            border-bottom: 2px solid #2d2d3f;
-            letter-spacing: 0.5px;
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.6;
         }
 
-        td {
-            padding: 16px;
-            border-bottom: 1px solid #2d2d3f;
-            font-size: 1.1rem;
-            font-weight: 500;
+        .btn-primary {
+            background: linear-gradient(135deg, var(--bball-orange), var(--bball-dark));
+            color: white;
+            text-decoration: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(255, 102, 0, 0.3);
         }
 
-        tr:hover td {
-            background-color: rgba(255,255,255,0.02);
-        }
-
-        .col-rank { width: 80px; text-align: center; font-family: 'Impact', sans-serif; font-size: 1.3rem; color: var(--text-muted); }
-        .col-team { font-weight: 600; }
-        .col-matches { width: 100px; text-align: center; color: var(--text-muted); }
-        .col-points { width: 100px; text-align: center; font-family: 'Impact', sans-serif; font-size: 1.4rem; color: var(--bball-orange); }
-
-        /* Styling für die Top 3 */
-        tr:nth-child(1) .col-rank { color: #ffd700; font-size: 1.6rem; text-shadow: 0 0 10px rgba(255,215,0,0.3); } /* Gold */
-        tr:nth-child(2) .col-rank { color: #c0c0c0; font-size: 1.5rem; } /* Silber */
-        tr:nth-child(3) .col-rank { color: #cd7f32; font-size: 1.4rem; } /* Bronze */
-
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
+        footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <div class="badge">Berlin Tournaments</div>
-        <h1>Championship 2026</h1>
-    </header>
+    <nav>
+        <a href="index.html" class="logo">Berlin <span>Hoops</span></a>
+        <div class="nav-links">
+            <a href="index.html">Startseite</a>
+            <a href="tabelle.html">Meisterschaftstabelle</a>
+        </div>
+    </nav>
 
-    <!-- TABELLE -->
-    <div class="scoreboard-wrapper">
-        <div class="scoreboard-title">Aktuelle Tabelle</div>
-        <table>
-            <thead>
-                <tr>
-                    <th class="col-rank">Platz</th>
-                    <th class="col-team">Team</th>
-                    <th class="col-matches">Spiele</th>
-                    <th class="col-points">Punkte</th>
-                </tr>
-            </thead>
-            <!-- Hier generiert das JavaScript gleich die Teams rein -->
-            <tbody id="table-body">
-            </tbody>
-        </table>
+    <div class="hero">
+        <div class="hero-badge">Die offizielle Liga 2026</div>
+        <h1>Der Asphalt<br>Brennt.</h1>
+        <p>Willkommen zur geilsten Basketball-Meisterschaft Berlins. Harte Defense, krasse Dunks und eine Tabelle, die keine Lügen kennt. Verfolge die Stats der besten Teams der Stadt.</p>
+        <a href="tabelle.html" class="btn-primary">Zur Tabelle 🏀</a>
     </div>
 
     <footer>
-        &copy; 2026 Berlin Basketball Meisterschaft | Hosted on GitHub Pages 🏀
+        &copy; 2026 Berlin Hoops | Powered by GitHub Pages
     </footer>
-</div>
-
-<script>
-    // =========================================================
-    // 🛠️ HIER DIE SCORES EINTRAGEN! (Dein neues Admin-Panel)
-    // =========================================================
-    // Trage hier einfach die aktuellen Daten ein.
-    // Das Skript sortiert die Teams vollautomatisch nach Punkten.
-    
-    const tournamentData = [
-        { name: "Alba Berlin", matches: 5, points: 10 },
-        { name: "Berlin Baskets", matches: 5, points: 6 },
-        { name: "Streetball Kreuzberg", matches: 5, points: 8 },
-        { name: "Neukölln Kings", matches: 5, points: 12 }, // Test: Höchste Punktzahl
-        { name: "Kreuzberg Hoops", matches: 5, points: 2 }
-    ];
-
-    // =========================================================
-    // AB HIER NICHTS MEHR ÄNDERN (Die Logik übernimmt den Rest)
-    // =========================================================
-
-    // 1. Teams nach Punkten absteigend sortieren
-    tournamentData.sort((a, b) => b.points - a.points);
-
-    // 2. Tabelle ins HTML rendern
-    const tableBody = document.getElementById('table-body');
-    let htmlContent = '';
-
-    tournamentData.forEach((team, index) => {
-        const rank = index + 1;
-        htmlContent += `
-            <tr>
-                <td class="col-rank">${rank}</td>
-                <td class="col-team">${team.name}</td>
-                <td class="col-matches">${team.matches}</td>
-                <td class="col-points">${team.points}</td>
-            </tr>
-        `;
-    });
-
-    tableBody.innerHTML = htmlContent;
-</script>
 
 </body>
 </html>
