@@ -1,0 +1,5 @@
+# Sensible Konfigurationen und Passwörter ignorieren
+config.php
+
+# Live-Spieldaten ignorieren
+scores.txt
