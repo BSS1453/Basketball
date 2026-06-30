@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabelle | Berlin Hoops 2026</title>
+    <style>
+        :root {
+            --bball-orange: #ff6600;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border-color: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation (identisch zur Startseite) */
+        nav {
+            background-color: var(--card-bg);
+            padding: 20px 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--bball-orange);
+        }
+        .logo { font-family: 'Impact', sans-serif; font-size: 1.8rem; color: var(--text-dark); text-decoration: none; text-transform: uppercase; }
+        .logo span { color: var(--bball-orange); }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; margin-left: 25px; font-size: 1.1rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--bball-orange); }
+
+        /* Container & Tabelle */
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-title h1 {
+            font-family: 'Impact', sans-serif;
+            font-size: 3rem;
+            color: var(--text-dark);
+            text-transform: uppercase;
+        }
+
+        .table-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 18px 20px;
+            font-size: 0.9rem;
+            border-bottom: 2px solid var(--border-color);
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #fcfcfc; }
+
+        /* Spalten-Styling */
+        .col-rank { width: 80px; text-align: center; font-family: 'Impact', sans-serif; font-size: 1.3rem; color: var(--text-muted); }
+        .col-team { font-weight: bold; color: var(--text-dark); }
+        .col-matches { width: 100px; text-align: center; color: var(--text-muted); }
+        .col-points { width: 100px; text-align: center; font-family: 'Impact', sans-serif; font-size: 1.4rem; color: var(--bball-orange); }
+
+        /* Medaillen-Farben für die Top 3 */
+        tr:nth-child(1) .col-rank { color: #f1c40f; font-size: 1.6rem; } /* Gold */
+        tr:nth-child(2) .col-rank { color: #95a5a6; font-size: 1.5rem; } /* Silber */
+        tr:nth-child(3) .col-rank { color: #d35400; font-size: 1.4rem; } /* Bronze */
+
+        footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Berlin <span>Hoops</span></a>
+        <div class="nav-links">
+            <a href="index.html">Startseite</a>
+            <a href="tabelle.html">Meisterschaftstabelle</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-title">
+            <h1>Saison 2026</h1>
+        </div>
+
+        <div class="table-card">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-rank">Platz</th>
+                        <th class="col-team">Team</th>
+                        <th class="col-matches">Spiele</th>
+                        <th class="col-points">Punkte</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Berlin Hoops | Powered by GitHub Pages
+    </footer>
+
+    <script>
+        // =========================================================
+        // 🏀 HIER TRÄGST DU DIE PUNKTE EIN (in GitHub)
+        // =========================================================
+        
+        const tournamentData = [
+            { name: "Alba Berlin", matches: 5, points: 10 },
+            { name: "Berlin Baskets", matches: 5, points: 6 },
+            { name: "Streetball Kreuzberg", matches: 5, points: 8 },
+            { name: "Neukölln Kings", matches: 5, points: 15 }, 
+            { name: "Kreuzberg Hoops", matches: 5, points: 2 }
+        ];
+
+        // =========================================================
+        
+        // Tabelle automatisch sortieren
+        tournamentData.sort((a, b) => b.points - a.points);
+
+        // Tabelle ins HTML rendern
+        const tableBody = document.getElementById('table-body');
+        let htmlContent = '';
+
+        tournamentData.forEach((team, index) => {
+            const rank = index + 1;
+            htmlContent += `
+                <tr>
+                    <td class="col-rank">${rank}</td>
+                    <td class="col-team">${team.name}</td>
+                    <td class="col-matches">${team.matches}</td>
+                    <td class="col-points">${team.points}</td>
+                </tr>
+            `;
+        });
+
+        tableBody.innerHTML = htmlContent;
+    </script>
+
+</body>
+</html>
