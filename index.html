@@ -135,11 +135,153 @@
         <h1>Der Asphalt<br>Brennt.</h1>
         <p>Willkommen zur geilsten Basketball-Meisterschaft Berlins. Harte Defense, krasse Dunks und eine Tabelle, die keine Lügen kennt. Verfolge die Stats der besten Teams der Stadt.</p>
         <a href="tabelle.html" class="btn-primary">Zur Tabelle 🏀</a>
-    </div>
+
+        <div style="margin-top: 60px; display: flex; flex-direction: column; align-items: center;">
+            <p style="font-family: 'Impact', sans-serif; text-transform: uppercase; margin-bottom: 10px; color: var(--bball-dark); font-size: 1.5rem; letter-spacing: 1px;">Beweis dein Timing</p>
+            <canvas id="hoopsGame" width="300" height="350" style="background-color: white; border: 3px solid var(--text-dark); border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); touch-action: none; max-width: 100%;"></canvas>
+            <p style="margin-top: 10px; font-size: 0.9rem; font-weight: bold;">Tippe auf das Feld, um zu werfen!</p>
+        </div>
+        </div>
 
     <footer>
         &copy; 2026 Berlin Hoops | Powered by GitHub Pages
     </footer>
 
+    <script>
+        const canvas = document.getElementById('hoopsGame');
+        const ctx = canvas.getContext('2d');
+
+        // Spielvariablen
+        let score = 0;
+        let highScore = 0;
+        
+        // Der Korb
+        const hoop = { x: 125, y: 50, width: 50, height: 10 };
+        
+        // Der Ball
+        let ball = { 
+            x: 150, 
+            y: 300, 
+            radius: 15, 
+            speed: 3.5, // Start-Geschwindigkeit
+            dx: 3.5, 
+            isShooting: false 
+        };
+
+        function drawGame() {
+            // Hintergrund leeren
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Hilfslinien im Hintergrund für Streetball-Vibe
+            ctx.fillStyle = '#f4f6f9';
+            ctx.fillRect(0, hoop.y + hoop.height, canvas.width, canvas.height);
+
+            // Backboard (Brett)
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(hoop.x - 25, hoop.y - 40, hoop.width + 50, 40); 
+            ctx.strokeStyle = 'white';
+            ctx.strokeRect(hoop.x - 15, hoop.y - 30, hoop.width + 30, 30); // Inneres Quadrat
+
+            // Der Ring
+            ctx.fillStyle = '#ff6600';
+            ctx.fillRect(hoop.x, hoop.y, hoop.width, hoop.height);
+
+            // Das Netz
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.beginPath();
+            ctx.moveTo(hoop.x, hoop.y + hoop.height);
+            ctx.lineTo(hoop.x + 10, hoop.y + hoop.height + 20);
+            ctx.lineTo(hoop.x + hoop.width - 10, hoop.y + hoop.height + 20);
+            ctx.lineTo(hoop.x + hoop.width, hoop.y + hoop.height);
+            ctx.stroke();
+
+            // Der Ball
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#d35400';
+            ctx.fill();
+            
+            // Ball-Linien (für den Look)
+            ctx.strokeStyle = '#2c3e50';
+            ctx.lineWidth = 2;
+            ctx.stroke(); // Außenrand
+            ctx.beginPath();
+            ctx.moveTo(ball.x - ball.radius, ball.y);
+            ctx.lineTo(ball.x + ball.radius, ball.y);
+            ctx.moveTo(ball.x, ball.y - ball.radius);
+            ctx.lineTo(ball.x, ball.y + ball.radius);
+            ctx.stroke(); // Kreuz
+
+            // Score-Texte
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '22px Impact';
+            ctx.fillText('SCORE: ' + score, 15, 30);
+            ctx.fillStyle = '#7f8c8d';
+            ctx.font = '16px Impact';
+            ctx.fillText('HIGH: ' + highScore, canvas.width - 70, 30);
+        }
+
+        function updateGame() {
+            if (!ball.isShooting) {
+                // Ball bewegt sich hin und her
+                ball.x += ball.dx;
+                // Wand-Kollision (links & rechts)
+                if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+                    ball.dx *= -1;
+                }
+            } else {
+                // Ball fliegt nach oben
+                ball.y -= 12;
+
+                // Check auf Höhe des Korbs
+                if (ball.y - ball.radius <= hoop.y + hoop.height && ball.y > hoop.y - 15) {
+                    // Check ob der Ball horizontal reinpasst
+                    if (ball.x > hoop.x && ball.x < hoop.x + hoop.width) {
+                        score++;
+                        if(score > highScore) highScore = score;
+                        
+                        // Etwas schneller machen als Challenge
+                        ball.speed += 0.3; 
+                        resetBall(true);
+                    }
+                }
+
+                // Vorbei geworfen (oben am Bildschirmrand angekommen)
+                if (ball.y < -20) {
+                    score = 0;
+                    ball.speed = 3.5; // Speed-Reset
+                    resetBall(false);
+                }
+            }
+        }
+
+        function resetBall(scored) {
+            ball.y = 300;
+            ball.isShooting = false;
+            // Laufrichtung nach Treffer oder Fehler beibehalten, aber Speed updaten
+            ball.dx = (ball.dx > 0) ? ball.speed : -ball.speed;
+        }
+
+        function werfen(e) {
+            e.preventDefault(); // Verhindert Zoom/Scroll am Handy
+            if (!ball.isShooting) {
+                ball.isShooting = true;
+            }
+        }
+
+        // Steuerung (Maus für PC, Touch für Smartphone)
+        canvas.addEventListener('mousedown', werfen);
+        canvas.addEventListener('touchstart', werfen, { passive: false });
+
+        // Game Loop
+        function gameLoop() {
+            updateGame();
+            drawGame();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Spiel starten
+        gameLoop();
+    </script>
 </body>
 </html>
