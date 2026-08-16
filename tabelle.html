@@ -3,184 +3,887 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabelle | Berlin Hoops 2026</title>
+    <meta name="theme-color" content="#090b10">
+
+    <title>Standings | Berlin Hoops 2026</title>
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         :root {
-            --bball-orange: #ff6600;
-            --bg-light: #f4f6f9;
-            --card-bg: #ffffff;
-            --text-dark: #2c3e50;
-            --text-muted: #7f8c8d;
-            --border-color: #e2e8f0;
+            --orange: #ff5c00;
+            --orange-light: #ff8a00;
+            --dark: #090b10;
+            --dark-2: #11141c;
+            --dark-3: #181c27;
+            --white: #ffffff;
+            --muted: #8c93a3;
+            --line: rgba(255,255,255,.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+
+            font-family: "Inter", sans-serif;
+
+            color: var(--white);
+
+            background:
+                radial-gradient(circle at 20% 0%, rgba(255,92,0,.14), transparent 28%),
+                radial-gradient(circle at 85% 70%, rgba(255,92,0,.06), transparent 30%),
+                var(--dark);
         }
 
-        /* Navigation (identisch zur Startseite) */
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            z-index: -1;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+            background-size: 60px 60px;
+
+            mask-image:
+                linear-gradient(to bottom, black, transparent);
+        }
+
+        /* ================= NAV ================= */
+
         nav {
-            background-color: var(--card-bg);
-            padding: 20px 40px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            width: min(1180px, calc(100% - 40px));
+            height: 78px;
+
+            margin: 20px auto 0;
+            padding: 0 26px;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 4px solid var(--bball-orange);
-        }
-        .logo { font-family: 'Impact', sans-serif; font-size: 1.8rem; color: var(--text-dark); text-decoration: none; text-transform: uppercase; }
-        .logo span { color: var(--bball-orange); }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; margin-left: 25px; font-size: 1.1rem; transition: color 0.2s; }
-        .nav-links a:hover { color: var(--bball-orange); }
 
-        /* Container & Tabelle */
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            padding: 0 20px;
-            flex-grow: 1;
-            width: 100%;
+            background: rgba(18,21,29,.72);
+
+            backdrop-filter: blur(18px);
+
+            border: 1px solid var(--line);
+            border-radius: 18px;
+
+            box-shadow:
+                0 20px 70px rgba(0,0,0,.3);
         }
 
-        .header-title {
-            text-align: center;
-            margin-bottom: 40px;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: white;
+            text-decoration: none;
+
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            font-weight: 900;
         }
 
-        .header-title h1 {
-            font-family: 'Impact', sans-serif;
-            font-size: 3rem;
-            color: var(--text-dark);
+        .logo-ball {
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--orange-light),
+                    #cc3b00
+                );
+
+            box-shadow:
+                0 0 30px rgba(255,92,0,.3);
+        }
+
+        .logo span {
+            color: var(--orange);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: #c8ccd5;
+
+            padding: 11px 15px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: .9rem;
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: rgba(255,255,255,.06);
+        }
+
+        .nav-links .active {
+            color: white;
+            background: var(--orange);
+        }
+
+        /* ================= CONTENT ================= */
+
+        main {
+            width: min(1100px, calc(100% - 40px));
+            margin: auto;
+            padding: 85px 0 100px;
+        }
+
+        .league-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 40px;
+
+            margin-bottom: 45px;
+        }
+
+        .season-label {
+            color: var(--orange);
+
+            margin-bottom: 12px;
+
+            font-weight: 900;
+            font-size: .78rem;
+
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-family: "Anton", sans-serif;
+
+            font-size: clamp(3.8rem, 8vw, 7rem);
+
+            font-weight: 400;
+
+            line-height: .9;
+
             text-transform: uppercase;
         }
 
-        .table-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        h1 span {
+            color: transparent;
+
+            -webkit-text-stroke:
+                1.5px rgba(255,255,255,.27);
+        }
+
+        .league-description {
+            max-width: 380px;
+
+            color: var(--muted);
+
+            font-size: .95rem;
+
+            line-height: 1.7;
+        }
+
+        /* ================= SUMMARY ================= */
+
+        .summary {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 22px;
+        }
+
+        .summary-card {
+            position: relative;
             overflow: hidden;
-            border: 1px solid var(--border-color);
+
+            padding: 22px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 18px;
+        }
+
+        .summary-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 100px;
+            height: 100px;
+
+            right: -35px;
+            bottom: -50px;
+
+            border-radius: 50%;
+
+            background: var(--orange);
+
+            filter: blur(45px);
+
+            opacity: .13;
+        }
+
+        .summary-card small {
+            display: block;
+
+            color: var(--muted);
+
+            margin-bottom: 7px;
+
+            font-size: .68rem;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+        .summary-card strong {
+            font-family: "Anton", sans-serif;
+
+            font-size: 2rem;
+
+            font-weight: 400;
+        }
+
+        .summary-card .orange {
+            color: var(--orange);
+        }
+
+        /* ================= TABLE ================= */
+
+        .standings-card {
+            overflow: hidden;
+
+            background:
+                rgba(17,20,28,.78);
+
+            backdrop-filter: blur(20px);
+
+            border:
+                1px solid var(--line);
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.35);
+        }
+
+        .standings-top {
+            padding: 22px 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom:
+                1px solid var(--line);
+        }
+
+        .standings-top strong {
+            font-size: .9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .updated {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: var(--muted);
+
+            font-size: .72rem;
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #36db79;
+
+            box-shadow:
+                0 0 12px rgba(54,219,121,.7);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            text-align: left;
         }
 
         th {
-            background-color: #f8fafc;
-            color: var(--text-muted);
-            font-weight: bold;
+            padding: 17px 22px;
+
+            color: #697180;
+
+            background:
+                rgba(255,255,255,.018);
+
+            text-align: left;
+
+            font-size: .65rem;
+            font-weight: 900;
+
+            letter-spacing: 1.4px;
+
             text-transform: uppercase;
-            padding: 18px 20px;
-            font-size: 0.9rem;
-            border-bottom: 2px solid var(--border-color);
-            letter-spacing: 1px;
+
+            border-bottom:
+                1px solid var(--line);
         }
 
         td {
-            padding: 18px 20px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 1.1rem;
-            font-weight: 500;
+            height: 82px;
+
+            padding: 15px 22px;
+
+            border-bottom:
+                1px solid var(--line);
+
+            transition: .2s ease;
         }
 
-        tr:last-child td { border-bottom: none; }
-        tr:hover td { background-color: #fcfcfc; }
+        tbody tr {
+            transition: .2s ease;
+        }
 
-        /* Spalten-Styling */
-        .col-rank { width: 80px; text-align: center; font-family: 'Impact', sans-serif; font-size: 1.3rem; color: var(--text-muted); }
-        .col-team { font-weight: bold; color: var(--text-dark); }
-        .col-matches { width: 100px; text-align: center; color: var(--text-muted); }
-        .col-points { width: 100px; text-align: center; font-family: 'Impact', sans-serif; font-size: 1.4rem; color: var(--bball-orange); }
+        tbody tr:hover {
+            background:
+                rgba(255,255,255,.035);
+        }
 
-        /* Medaillen-Farben für die Top 3 */
-        tr:nth-child(1) .col-rank { color: #f1c40f; font-size: 1.6rem; } /* Gold */
-        tr:nth-child(2) .col-rank { color: #95a5a6; font-size: 1.5rem; } /* Silber */
-        tr:nth-child(3) .col-rank { color: #d35400; font-size: 1.4rem; } /* Bronze */
+        tbody tr:hover td {
+            transform: translateX(3px);
+        }
 
-        footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.9rem; }
+        tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .rank {
+            width: 90px;
+
+            font-family: "Anton", sans-serif;
+
+            font-size: 1.35rem;
+
+            color: #6e7583;
+        }
+
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            font-weight: 800;
+        }
+
+        .team-logo {
+            width: 45px;
+            height: 45px;
+
+            flex-shrink: 0;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 13px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #242936,
+                    #13161e
+                );
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            font-size: .72rem;
+            font-weight: 900;
+        }
+
+        .games {
+            width: 120px;
+
+            color: var(--muted);
+
+            font-weight: 700;
+        }
+
+        .points {
+            width: 130px;
+
+            color: var(--orange);
+
+            font-family: "Anton", sans-serif;
+
+            font-size: 1.7rem;
+        }
+
+        .leader {
+            position: relative;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,92,0,.09),
+                    transparent 55%
+                );
+        }
+
+        .leader .rank {
+            color: #ffd659;
+        }
+
+        .leader .team-logo {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8a00,
+                    #d44400
+                );
+
+            box-shadow:
+                0 0 30px rgba(255,92,0,.18);
+        }
+
+        .rank-medal {
+            margin-left: 6px;
+
+            font-size: .8rem;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            width: min(1100px, calc(100% - 40px));
+
+            margin: auto;
+
+            padding: 35px 0 45px;
+
+            display: flex;
+            justify-content: space-between;
+
+            color: #646b78;
+
+            border-top:
+                1px solid var(--line);
+
+            font-size: .76rem;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+                width: calc(100% - 24px);
+
+                margin-top: 12px;
+
+                padding: 0 14px;
+
+                height: 68px;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .nav-links a {
+                font-size: .76rem;
+
+                padding: 9px;
+            }
+
+            main {
+                width: calc(100% - 24px);
+
+                padding-top: 60px;
+            }
+
+            .league-header {
+                display: block;
+            }
+
+            .league-description {
+                margin-top: 25px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            th,
+            td {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .rank {
+                width: 55px;
+            }
+
+            .games {
+                width: 65px;
+            }
+
+            .points {
+                width: 70px;
+            }
+
+            .team-logo {
+                width: 38px;
+                height: 38px;
+            }
+
+            footer {
+                flex-direction: column;
+
+                text-align: center;
+
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .team-logo {
+                display: none;
+            }
+
+            th {
+                font-size: .57rem;
+            }
+
+            td {
+                height: 70px;
+
+                font-size: .82rem;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-    <nav>
-        <a href="index.html" class="logo">Berlin <span>Hoops</span></a>
-        <div class="nav-links">
-            <a href="index.html">Startseite</a>
-            <a href="tabelle.html">Meisterschaftstabelle</a>
-        </div>
-    </nav>
+<nav>
 
-    <div class="container">
-        <div class="header-title">
-            <h1>Saison 2026</h1>
-        </div>
+    <a href="index.html" class="logo">
+        <div class="logo-ball">🏀</div>
 
-        <div class="table-card">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="col-rank">Platz</th>
-                        <th class="col-team">Team</th>
-                        <th class="col-matches">Spiele</th>
-                        <th class="col-points">Punkte</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-                    </tbody>
-            </table>
+        <div class="logo-text">
+            Berlin <span>Hoops</span>
         </div>
+    </a>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+
+        <a
+            href="tabelle.html"
+            class="active"
+        >
+            Standings
+        </a>
     </div>
 
-    <footer>
-        &copy; 2026 Berlin Hoops | Powered by GitHub Pages
-    </footer>
+</nav>
 
-    <script>
-        // =========================================================
-        // 🏀 HIER TRÄGST DU DIE PUNKTE EIN (in GitHub)
-        // =========================================================
-        
-        const tournamentData = [
-            { name: "Alba Berlin", matches: 5, points: 10 },
-            { name: "Berlin Baskets", matches: 5, points: 6 },
-            { name: "Streetball Kreuzberg", matches: 5, points: 8 },
-            { name: "Neukölln Kings", matches: 5, points: 15 }, 
-            { name: "Kreuzberg Hoops", matches: 5, points: 2 }
-        ];
 
-        // =========================================================
-        
-        // Tabelle automatisch sortieren
-        tournamentData.sort((a, b) => b.points - a.points);
+<main>
 
-        // Tabelle ins HTML rendern
-        const tableBody = document.getElementById('table-body');
-        let htmlContent = '';
+    <header class="league-header">
 
-        tournamentData.forEach((team, index) => {
-            const rank = index + 1;
-            htmlContent += `
+        <div>
+
+            <div class="season-label">
+                Official League Standings
+            </div>
+
+            <h1>
+                Season<br>
+                <span>2026</span>
+            </h1>
+
+        </div>
+
+        <p class="league-description">
+            Keine Diskussionen. Keine Ausreden.
+            Die Zahlen entscheiden, wer Berlin regiert.
+            Aktuelle Tabelle der Berlin Hoops Championship 2026.
+        </p>
+
+    </header>
+
+
+    <section class="summary">
+
+        <div class="summary-card">
+            <small>League Leader</small>
+            <strong
+                class="orange"
+                id="leaderName"
+            >
+                –
+            </strong>
+        </div>
+
+        <div class="summary-card">
+            <small>Teams</small>
+            <strong id="teamCount">
+                0
+            </strong>
+        </div>
+
+        <div class="summary-card">
+            <small>Top Score</small>
+            <strong id="topPoints">
+                0 PTS
+            </strong>
+        </div>
+
+    </section>
+
+
+    <section class="standings-card">
+
+        <div class="standings-top">
+
+            <strong>
+                Championship Standings
+            </strong>
+
+            <div class="updated">
+                <span class="status-dot"></span>
+                LIVE TABLE
+            </div>
+
+        </div>
+
+
+        <table>
+
+            <thead>
                 <tr>
-                    <td class="col-rank">${rank}</td>
-                    <td class="col-team">${team.name}</td>
-                    <td class="col-matches">${team.matches}</td>
-                    <td class="col-points">${team.points}</td>
+                    <th>Rank</th>
+                    <th>Team</th>
+                    <th>Games</th>
+                    <th>PTS</th>
                 </tr>
-            `;
-        });
+            </thead>
 
-        tableBody.innerHTML = htmlContent;
-    </script>
+            <tbody id="tableBody"></tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <span>© 2026 BERLIN HOOPS</span>
+    <span>THE CITY IS WATCHING.</span>
+</footer>
+
+
+<script>
+
+    /* =====================================================
+       🏀 HIER ÄNDERST DU DEINE TEAMS / SPIELE / PUNKTE
+       ===================================================== */
+
+    const tournamentData = [
+
+        {
+            name: "Alba Berlin",
+            short: "AB",
+            matches: 5,
+            points: 10
+        },
+
+        {
+            name: "Berlin Baskets",
+            short: "BB",
+            matches: 5,
+            points: 6
+        },
+
+        {
+            name: "Streetball Kreuzberg",
+            short: "SK",
+            matches: 5,
+            points: 8
+        },
+
+        {
+            name: "Neukölln Kings",
+            short: "NK",
+            matches: 5,
+            points: 15
+        },
+
+        {
+            name: "Kreuzberg Hoops",
+            short: "KH",
+            matches: 5,
+            points: 2
+        }
+
+    ];
+
+    /* ===================================================== */
+
+
+    tournamentData.sort(
+        (a, b) => b.points - a.points
+    );
+
+
+    const tableBody =
+        document.getElementById("tableBody");
+
+
+    function getMedal(rank) {
+
+        if (rank === 1) return " 👑";
+
+        if (rank === 2) return " 🥈";
+
+        if (rank === 3) return " 🥉";
+
+        return "";
+    }
+
+
+    tournamentData.forEach(
+        (team, index) => {
+
+            const rank = index + 1;
+
+            const row =
+                document.createElement("tr");
+
+
+            if (rank === 1) {
+                row.classList.add("leader");
+            }
+
+
+            row.innerHTML = `
+
+                <td class="rank">
+
+                    ${String(rank).padStart(2, "0")}
+
+                    <span class="rank-medal">
+                        ${getMedal(rank)}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="team">
+
+                        <div class="team-logo">
+                            ${team.short}
+                        </div>
+
+                        <span>
+                            ${team.name}
+                        </span>
+
+                    </div>
+
+                </td>
+
+
+                <td class="games">
+                    ${team.matches}
+                </td>
+
+
+                <td class="points">
+                    ${team.points}
+                </td>
+
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+
+    /* ===============================
+       SUMMARY AUTOMATISCH AUSRECHNEN
+       =============================== */
+
+    const leader =
+        tournamentData[0];
+
+
+    document.getElementById(
+        "leaderName"
+    ).textContent =
+        leader.name;
+
+
+    document.getElementById(
+        "teamCount"
+    ).textContent =
+        tournamentData.length;
+
+
+    document.getElementById(
+        "topPoints"
+    ).textContent =
+        leader.points + " PTS";
+
+</script>
 
 </body>
 </html>
