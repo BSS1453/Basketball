@@ -3,285 +3,1179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berlin Hoops | Meisterschaft 2026</title>
+    <meta name="theme-color" content="#090b10">
+    <title>Berlin Hoops | Championship 2026</title>
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         :root {
-            --bball-orange: #ff6600;
-            --bball-dark: #d35400;
-            --bg-light: #f4f6f9;
-            --card-bg: #ffffff;
-            --text-dark: #2c3e50;
-            --text-muted: #7f8c8d;
+            --orange: #ff5c00;
+            --orange-light: #ff8a00;
+            --orange-dark: #d84400;
+            --dark: #090b10;
+            --dark-2: #10131b;
+            --dark-3: #181c27;
+            --white: #ffffff;
+            --muted: #9399a8;
+            --line: rgba(255,255,255,.09);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-            background-size: 20px 20px;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: var(--white);
+            background:
+                radial-gradient(circle at 15% 20%, rgba(255,92,0,.15), transparent 30%),
+                radial-gradient(circle at 90% 60%, rgba(255,92,0,.07), transparent 30%),
+                var(--dark);
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: linear-gradient(to bottom, black, transparent 90%);
+        }
+
+        /* ================= NAV ================= */
+
         nav {
-            background-color: var(--card-bg);
-            padding: 20px 40px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            width: min(1180px, calc(100% - 40px));
+            height: 78px;
+            margin: 20px auto 0;
+            padding: 0 26px;
+
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            border-bottom: 4px solid var(--bball-orange);
+            justify-content: space-between;
+
+            position: relative;
+            z-index: 20;
+
+            background: rgba(18,21,29,.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            box-shadow: 0 20px 70px rgba(0,0,0,.3);
         }
 
         .logo {
-            font-family: 'Impact', sans-serif;
-            font-size: 1.8rem;
-            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
             text-decoration: none;
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: -.5px;
             text-transform: uppercase;
         }
 
-        .logo span { color: var(--bball-orange); }
+        .logo-ball {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--orange-light), var(--orange-dark));
+            box-shadow: 0 0 30px rgba(255,92,0,.35);
+            transform: rotate(-7deg);
+        }
+
+        .logo span {
+            color: var(--orange);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
         .nav-links a {
+            color: #cdd0d8;
             text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            margin-left: 25px;
-            font-size: 1.1rem;
-            transition: color 0.2s;
+            font-size: .92rem;
+            font-weight: 700;
+            padding: 11px 15px;
+            border-radius: 10px;
+            transition: .25s ease;
         }
 
-        .nav-links a:hover { color: var(--bball-orange); }
+        .nav-links a:hover {
+            color: white;
+            background: rgba(255,255,255,.06);
+        }
 
-        /* Hero Bereich (Präsenz!) */
+        .nav-links .nav-cta {
+            color: white;
+            background: var(--orange);
+        }
+
+        .nav-links .nav-cta:hover {
+            background: #ff701c;
+            transform: translateY(-2px);
+        }
+
+        /* ================= HERO ================= */
+
         .hero {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            width: min(1180px, calc(100% - 40px));
+            min-height: calc(100vh - 125px);
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 1.15fr .85fr;
             align-items: center;
-            text-align: center;
-            padding: 60px 20px;
+            gap: 80px;
+            padding: 70px 0 90px;
         }
 
-        .hero-badge {
-            background-color: rgba(255, 102, 0, 0.1);
-            color: var(--bball-dark);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-weight: bold;
+        .hero-content {
+            position: relative;
+            z-index: 5;
+        }
+
+        .eyebrow {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 25px;
+            padding: 9px 14px;
+
+            color: #ffac77;
+            background: rgba(255,92,0,.1);
+            border: 1px solid rgba(255,92,0,.25);
+            border-radius: 999px;
+
+            font-size: .76rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
+            letter-spacing: 1.5px;
         }
 
-        .hero h1 {
-            font-family: 'Impact', sans-serif;
-            font-size: 4.5rem;
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--orange);
+            box-shadow: 0 0 0 0 rgba(255,92,0,.6);
+            animation: live 1.8s infinite;
+        }
+
+        @keyframes live {
+            70% {
+                box-shadow: 0 0 0 8px rgba(255,92,0,0);
+            }
+        }
+
+        h1 {
+            font-family: "Anton", sans-serif;
+            font-weight: 400;
+            font-size: clamp(5rem, 9vw, 9rem);
+            line-height: .82;
             text-transform: uppercase;
-            color: var(--text-dark);
-            line-height: 1.1;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+            letter-spacing: -3px;
+            margin-bottom: 32px;
         }
 
-        .hero p {
-            font-size: 1.3rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 40px;
-            line-height: 1.6;
+        h1 .outline {
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(255,255,255,.25);
+        }
+
+        h1 .orange {
+            color: var(--orange);
+            filter: drop-shadow(0 0 35px rgba(255,92,0,.18));
+        }
+
+        .hero-description {
+            max-width: 620px;
+            color: #a9aeba;
+            font-size: 1.08rem;
+            line-height: 1.75;
+            margin-bottom: 38px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 54px;
+            padding: 0 24px;
+
+            border-radius: 13px;
+            text-decoration: none;
+
+            font-weight: 800;
+            font-size: .9rem;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+
+            transition: .25s ease;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--bball-orange), var(--bball-dark));
             color: white;
-            text-decoration: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 8px;
-            text-transform: uppercase;
-            box-shadow: 0 10px 20px rgba(255, 102, 0, 0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
+            background: linear-gradient(135deg, var(--orange-light), var(--orange-dark));
+            box-shadow: 0 14px 40px rgba(255,92,0,.24);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(255, 102, 0, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(255,92,0,.4);
         }
 
-        footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.9rem; }
+        .btn-secondary {
+            color: white;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.045);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,.09);
+            transform: translateY(-3px);
+        }
+
+        /* ================= VISUAL ================= */
+
+        .visual {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 550px;
+        }
+
+        .visual-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: var(--orange);
+            filter: blur(140px);
+            opacity: .14;
+        }
+
+        .basketball {
+            position: relative;
+            width: 330px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            z-index: 3;
+
+            background:
+                radial-gradient(circle at 32% 25%, #ffb263 0%, #ff7b21 22%, #ec5100 58%, #9f2c00 100%);
+
+            box-shadow:
+                inset -35px -35px 55px rgba(0,0,0,.25),
+                inset 15px 15px 25px rgba(255,255,255,.15),
+                0 60px 90px rgba(0,0,0,.5),
+                0 0 100px rgba(255,92,0,.13);
+
+            animation: floatBall 5s ease-in-out infinite;
+        }
+
+        @keyframes floatBall {
+            0%,100% {
+                transform: translateY(0) rotate(-8deg);
+            }
+            50% {
+                transform: translateY(-24px) rotate(4deg);
+            }
+        }
+
+        .basketball::before,
+        .basketball::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 7px solid rgba(40,20,10,.7);
+        }
+
+        .basketball::before {
+            clip-path: polygon(47% 0, 54% 0, 54% 100%, 47% 100%);
+        }
+
+        .basketball::after {
+            clip-path: polygon(0 47%, 100% 47%, 100% 54%, 0 54%);
+        }
+
+        .ball-curve {
+            position: absolute;
+            inset: 24px;
+            border-radius: 50%;
+            border-left: 7px solid rgba(40,20,10,.7);
+            border-right: 7px solid rgba(40,20,10,.7);
+            transform: rotate(30deg);
+        }
+
+        .number-card {
+            position: absolute;
+            z-index: 5;
+            min-width: 155px;
+            padding: 18px 20px;
+
+            background: rgba(18,21,29,.82);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 18px;
+            box-shadow: 0 20px 50px rgba(0,0,0,.35);
+        }
+
+        .number-card span {
+            display: block;
+            color: var(--muted);
+            font-size: .65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 5px;
+        }
+
+        .number-card strong {
+            font-family: "Anton", sans-serif;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        .number-card.one {
+            top: 80px;
+            right: 0;
+            transform: rotate(4deg);
+        }
+
+        .number-card.two {
+            left: 5px;
+            bottom: 90px;
+            transform: rotate(-4deg);
+        }
+
+        .number-card strong.orange {
+            color: var(--orange);
+        }
+
+        /* ================= GAME ================= */
+
+        .game-section {
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, transparent, rgba(255,92,0,.035), transparent);
+        }
+
+        .game-wrap {
+            width: min(1000px, 100%);
+            margin: auto;
+            text-align: center;
+        }
+
+        .section-label {
+            color: var(--orange);
+            font-size: .78rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: "Anton", sans-serif;
+            font-size: clamp(2.6rem, 6vw, 5rem);
+            text-transform: uppercase;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .section-copy {
+            color: var(--muted);
+            line-height: 1.7;
+            margin: 16px auto 35px;
+            max-width: 600px;
+        }
+
+        .game-card {
+            width: fit-content;
+            max-width: 100%;
+            margin: 40px auto 0;
+            padding: 12px;
+
+            background: linear-gradient(
+                135deg,
+                rgba(255,255,255,.11),
+                rgba(255,255,255,.03)
+            );
+
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 26px;
+            box-shadow: 0 35px 90px rgba(0,0,0,.4);
+        }
+
+        canvas {
+            display: block;
+            max-width: 100%;
+            border-radius: 18px;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .game-help {
+            margin-top: 15px;
+            color: #777f8f;
+            font-size: .82rem;
+            font-weight: 600;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            width: min(1180px, calc(100% - 40px));
+            margin: auto;
+            padding: 35px 0 45px;
+
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+
+            border-top: 1px solid var(--line);
+            color: #676d79;
+            font-size: .78rem;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding-top: 80px;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .eyebrow {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .visual {
+                min-height: 430px;
+            }
+
+            .basketball {
+                width: min(290px, 70vw);
+            }
+        }
+
+        @media (max-width: 620px) {
+            nav {
+                width: calc(100% - 24px);
+                margin-top: 12px;
+                padding: 0 16px;
+                height: 68px;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .nav-links a {
+                padding: 10px 9px;
+                font-size: .78rem;
+            }
+
+            .nav-links .home-link {
+                display: none;
+            }
+
+            .hero {
+                width: calc(100% - 28px);
+                padding-top: 65px;
+            }
+
+            h1 {
+                letter-spacing: -1px;
+            }
+
+            .number-card {
+                min-width: 120px;
+                padding: 13px;
+            }
+
+            .number-card.one {
+                right: -5px;
+            }
+
+            .number-card.two {
+                left: -5px;
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
     </style>
 </head>
+
 <body>
 
-    <nav>
-        <a href="index.html" class="logo">Berlin <span>Hoops</span></a>
-        <div class="nav-links">
-            <a href="index.html">Startseite</a>
-            <a href="tabelle.html">Meisterschaftstabelle</a>
+<nav>
+    <a href="index.html" class="logo">
+        <div class="logo-ball">🏀</div>
+        <div class="logo-text">Berlin <span>Hoops</span></div>
+    </a>
+
+    <div class="nav-links">
+        <a class="home-link" href="index.html">Home</a>
+        <a href="#game">Challenge</a>
+        <a class="nav-cta" href="tabelle.html">Standings →</a>
+    </div>
+</nav>
+
+
+<main>
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                <span class="live-dot"></span>
+                Berlin Championship · Season 2026
+            </div>
+
+            <h1>
+                NO<br>
+                <span class="outline">EASY</span><br>
+                <span class="orange">BUCKETS.</span>
+            </h1>
+
+            <p class="hero-description">
+                Berlins Straßen werden zum Court. Harte Defense,
+                wilde Handles und keine Ausreden. Verfolge die
+                Meisterschaft und finde heraus, wer 2026 die Stadt übernimmt.
+            </p>
+
+            <div class="hero-actions">
+                <a href="tabelle.html" class="btn btn-primary">
+                    Tabelle ansehen
+                    <span>↗</span>
+                </a>
+
+                <a href="#game" class="btn btn-secondary">
+                    Shot Challenge
+                    <span>🏀</span>
+                </a>
+            </div>
+
         </div>
-    </nav>
 
-    <div class="hero">
-        <div class="hero-badge">Die offizielle Liga 2026</div>
-        <h1>Der Asphalt<br>Brennt.</h1>
-        <p>Willkommen zur geilsten Basketball-Meisterschaft Berlins. Harte Defense, krasse Dunks und eine Tabelle, die keine Lügen kennt. Verfolge die Stats der besten Teams der Stadt.</p>
-        <a href="tabelle.html" class="btn-primary">Zur Tabelle 🏀</a>
 
-        <div style="margin-top: 60px; display: flex; flex-direction: column; align-items: center;">
-            <p style="font-family: 'Impact', sans-serif; text-transform: uppercase; margin-bottom: 10px; color: var(--bball-dark); font-size: 1.5rem; letter-spacing: 1px;">Beweis dein Timing</p>
-            <canvas id="hoopsGame" width="300" height="350" style="background-color: white; border: 3px solid var(--text-dark); border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); touch-action: none; max-width: 100%;"></canvas>
-            <p style="margin-top: 10px; font-size: 0.9rem; font-weight: bold;">Tippe auf das Feld, um zu werfen!</p>
+        <div class="visual">
+
+            <div class="visual-glow"></div>
+
+            <div class="basketball">
+                <div class="ball-curve"></div>
+            </div>
+
+            <div class="number-card one">
+                <span>Season</span>
+                <strong>2026</strong>
+            </div>
+
+            <div class="number-card two">
+                <span>Location</span>
+                <strong class="orange">BERLIN</strong>
+            </div>
+
         </div>
+
+    </section>
+
+
+    <section class="game-section" id="game">
+
+        <div class="game-wrap">
+
+            <div class="section-label">
+                Berlin Hoops Challenge
+            </div>
+
+            <h2 class="section-title">
+                Hast du das Timing?
+            </h2>
+
+            <p class="section-copy">
+                Der Ball bewegt sich. Du hast genau einen Moment.
+                Klick oder tipp auf den Court und versenk das Ding.
+                Mit jedem Treffer wird es schneller.
+            </p>
+
+            <div class="game-card">
+                <canvas
+                    id="hoopsGame"
+                    width="420"
+                    height="520"
+                ></canvas>
+            </div>
+
+            <div class="game-help">
+                CLICK / TAP TO SHOOT · HIGH SCORE WIRD GESPEICHERT
+            </div>
+
         </div>
 
-    <footer>
-        &copy; 2026 Berlin Hoops | Powered by GitHub Pages
-    </footer>
+    </section>
 
-    <script>
-        const canvas = document.getElementById('hoopsGame');
-        const ctx = canvas.getContext('2d');
+</main>
 
-        // Spielvariablen
-        let score = 0;
-        let highScore = 0;
-        
-        // Der Korb
-        const hoop = { x: 125, y: 50, width: 50, height: 10 };
-        
-        // Der Ball
-        let ball = { 
-            x: 150, 
-            y: 300, 
-            radius: 15, 
-            speed: 3.5, // Start-Geschwindigkeit
-            dx: 3.5, 
-            isShooting: false 
-        };
 
-        function drawGame() {
-            // Hintergrund leeren
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+<footer>
+    <span>© 2026 BERLIN HOOPS</span>
+    <span>BUILT FOR THE STREETS OF BERLIN.</span>
+</footer>
 
-            // Hilfslinien im Hintergrund für Streetball-Vibe
-            ctx.fillStyle = '#f4f6f9';
-            ctx.fillRect(0, hoop.y + hoop.height, canvas.width, canvas.height);
 
-            // Backboard (Brett)
-            ctx.fillStyle = '#2c3e50';
-            ctx.fillRect(hoop.x - 25, hoop.y - 40, hoop.width + 50, 40); 
-            ctx.strokeStyle = 'white';
-            ctx.strokeRect(hoop.x - 15, hoop.y - 30, hoop.width + 30, 30); // Inneres Quadrat
+<script>
+    const canvas = document.getElementById("hoopsGame");
+    const ctx = canvas.getContext("2d");
 
-            // Der Ring
-            ctx.fillStyle = '#ff6600';
-            ctx.fillRect(hoop.x, hoop.y, hoop.width, hoop.height);
+    let score = 0;
+    let highScore = Number(localStorage.getItem("berlinHoopsHighscore")) || 0;
 
-            // Das Netz
-            ctx.strokeStyle = '#e2e8f0';
+    const hoop = {
+        x: 165,
+        y: 105,
+        width: 90,
+        height: 8
+    };
+
+    const ball = {
+        x: canvas.width / 2,
+        y: 445,
+        radius: 19,
+        speed: 4,
+        dx: 4,
+        shooting: false,
+        trail: []
+    };
+
+    let flash = 0;
+    let message = "";
+    let messageTimer = 0;
+    let particles = [];
+
+
+    function roundedRect(x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.roundRect(x, y, width, height, radius);
+    }
+
+
+    function drawBackground() {
+
+        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0, "#121722");
+        gradient.addColorStop(1, "#080a0f");
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        /* Court glow */
+        const glow = ctx.createRadialGradient(
+            canvas.width / 2,
+            190,
+            10,
+            canvas.width / 2,
+            190,
+            320
+        );
+
+        glow.addColorStop(0, "rgba(255,92,0,.12)");
+        glow.addColorStop(1, "rgba(255,92,0,0)");
+
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        /* Grid */
+        ctx.strokeStyle = "rgba(255,255,255,.035)";
+        ctx.lineWidth = 1;
+
+        for (let x = 0; x < canvas.width; x += 35) {
             ctx.beginPath();
-            ctx.moveTo(hoop.x, hoop.y + hoop.height);
-            ctx.lineTo(hoop.x + 10, hoop.y + hoop.height + 20);
-            ctx.lineTo(hoop.x + hoop.width - 10, hoop.y + hoop.height + 20);
-            ctx.lineTo(hoop.x + hoop.width, hoop.y + hoop.height);
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvas.height);
             ctx.stroke();
+        }
 
-            // Der Ball
+        for (let y = 0; y < canvas.height; y += 35) {
             ctx.beginPath();
-            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-            ctx.fillStyle = '#d35400';
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
+            ctx.stroke();
+        }
+
+        /* Court lines */
+        ctx.strokeStyle = "rgba(255,255,255,.08)";
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+        ctx.arc(
+            canvas.width / 2,
+            canvas.height + 70,
+            210,
+            Math.PI,
+            Math.PI * 2
+        );
+        ctx.stroke();
+    }
+
+
+    function drawHoop() {
+
+        /* Backboard shadow */
+        ctx.shadowColor = "rgba(255,255,255,.18)";
+        ctx.shadowBlur = 20;
+
+        roundedRect(120, 42, 180, 72, 8);
+        ctx.fillStyle = "#e8ebef";
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+        /* Backboard inner box */
+        ctx.strokeStyle = "#ff5c00";
+        ctx.lineWidth = 4;
+        ctx.strokeRect(170, 67, 80, 38);
+
+        /* Rim */
+        ctx.shadowColor = "#ff5c00";
+        ctx.shadowBlur = 20;
+
+        ctx.strokeStyle = "#ff5c00";
+        ctx.lineWidth = 8;
+
+        ctx.beginPath();
+        ctx.moveTo(hoop.x, hoop.y);
+        ctx.lineTo(hoop.x + hoop.width, hoop.y);
+        ctx.stroke();
+
+        ctx.shadowBlur = 0;
+
+        /* Net */
+        ctx.strokeStyle = "rgba(255,255,255,.55)";
+        ctx.lineWidth = 1.4;
+
+        for (let i = 0; i <= 6; i++) {
+            const startX = hoop.x + (hoop.width / 6) * i;
+            const endX = hoop.x + 15 + ((hoop.width - 30) / 6) * i;
+
+            ctx.beginPath();
+            ctx.moveTo(startX, hoop.y + 5);
+            ctx.lineTo(endX, hoop.y + 45);
+            ctx.stroke();
+        }
+
+        for (let y = 15; y < 45; y += 10) {
+            ctx.beginPath();
+            ctx.moveTo(hoop.x + 5, hoop.y + y);
+            ctx.lineTo(hoop.x + hoop.width - 5, hoop.y + y);
+            ctx.stroke();
+        }
+    }
+
+
+    function drawBall() {
+
+        /* Trail */
+        ball.trail.forEach((point, index) => {
+
+            const alpha = index / ball.trail.length * .18;
+
+            ctx.beginPath();
+            ctx.arc(
+                point.x,
+                point.y,
+                ball.radius * (index / ball.trail.length),
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle = `rgba(255,92,0,${alpha})`;
             ctx.fill();
-            
-            // Ball-Linien (für den Look)
-            ctx.strokeStyle = '#2c3e50';
-            ctx.lineWidth = 2;
-            ctx.stroke(); // Außenrand
+        });
+
+
+        ctx.save();
+
+        ctx.translate(ball.x, ball.y);
+
+        ctx.shadowColor = "rgba(255,92,0,.5)";
+        ctx.shadowBlur = 25;
+
+        const gradient = ctx.createRadialGradient(
+            -6, -7, 2,
+            0, 0, ball.radius
+        );
+
+        gradient.addColorStop(0, "#ffae55");
+        gradient.addColorStop(.45, "#ff701c");
+        gradient.addColorStop(1, "#bb3500");
+
+        ctx.fillStyle = gradient;
+
+        ctx.beginPath();
+        ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+        ctx.strokeStyle = "#32170d";
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+        ctx.arc(0, 0, ball.radius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(-ball.radius, 0);
+        ctx.lineTo(ball.radius, 0);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(0, -ball.radius);
+        ctx.lineTo(0, ball.radius);
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+
+    function drawUI() {
+
+        /* Score card */
+        roundedRect(16, 16, 115, 52, 12);
+
+        ctx.fillStyle = "rgba(255,255,255,.06)";
+        ctx.fill();
+
+        ctx.fillStyle = "#7f8797";
+        ctx.font = "700 10px Inter";
+        ctx.fillText("SCORE", 29, 36);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "900 21px Inter";
+        ctx.fillText(score, 29, 58);
+
+
+        /* Highscore */
+        roundedRect(canvas.width - 131, 16, 115, 52, 12);
+
+        ctx.fillStyle = "rgba(255,255,255,.06)";
+        ctx.fill();
+
+        ctx.fillStyle = "#7f8797";
+        ctx.font = "700 10px Inter";
+        ctx.fillText("HIGH SCORE", canvas.width - 116, 36);
+
+        ctx.fillStyle = "#ff6b18";
+        ctx.font = "900 21px Inter";
+        ctx.fillText(highScore, canvas.width - 116, 58);
+
+
+        /* Message */
+        if (messageTimer > 0) {
+
+            ctx.textAlign = "center";
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "900 27px Inter";
+
+            ctx.fillText(
+                message,
+                canvas.width / 2,
+                190
+            );
+
+            ctx.textAlign = "left";
+        }
+    }
+
+
+    function createParticles() {
+
+        for (let i = 0; i < 25; i++) {
+
+            particles.push({
+                x: canvas.width / 2,
+                y: hoop.y + 20,
+                dx: (Math.random() - .5) * 9,
+                dy: (Math.random() - .5) * 8,
+                size: Math.random() * 5 + 2,
+                life: 1
+            });
+        }
+    }
+
+
+    function updateParticles() {
+
+        particles.forEach(p => {
+            p.x += p.dx;
+            p.y += p.dy;
+            p.dy += .08;
+            p.life -= .025;
+        });
+
+        particles = particles.filter(p => p.life > 0);
+    }
+
+
+    function drawParticles() {
+
+        particles.forEach(p => {
+
+            ctx.globalAlpha = p.life;
+
+            ctx.fillStyle = "#ff6b00";
+
             ctx.beginPath();
-            ctx.moveTo(ball.x - ball.radius, ball.y);
-            ctx.lineTo(ball.x + ball.radius, ball.y);
-            ctx.moveTo(ball.x, ball.y - ball.radius);
-            ctx.lineTo(ball.x, ball.y + ball.radius);
-            ctx.stroke(); // Kreuz
+            ctx.arc(
+                p.x,
+                p.y,
+                p.size,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+        });
 
-            // Score-Texte
-            ctx.fillStyle = '#2c3e50';
-            ctx.font = '22px Impact';
-            ctx.fillText('SCORE: ' + score, 15, 30);
-            ctx.fillStyle = '#7f8c8d';
-            ctx.font = '16px Impact';
-            ctx.fillText('HIGH: ' + highScore, canvas.width - 70, 30);
+        ctx.globalAlpha = 1;
+    }
+
+
+    function scored() {
+
+        score++;
+
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem(
+                "berlinHoopsHighscore",
+                highScore
+            );
         }
 
-        function updateGame() {
-            if (!ball.isShooting) {
-                // Ball bewegt sich hin und her
-                ball.x += ball.dx;
-                // Wand-Kollision (links & rechts)
-                if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
-                    ball.dx *= -1;
-                }
-            } else {
-                // Ball fliegt nach oben
-                ball.y -= 12;
+        ball.speed += .45;
 
-                // Check auf Höhe des Korbs
-                if (ball.y - ball.radius <= hoop.y + hoop.height && ball.y > hoop.y - 15) {
-                    // Check ob der Ball horizontal reinpasst
-                    if (ball.x > hoop.x && ball.x < hoop.x + hoop.width) {
-                        score++;
-                        if(score > highScore) highScore = score;
-                        
-                        // Etwas schneller machen als Challenge
-                        ball.speed += 0.3; 
-                        resetBall(true);
-                    }
-                }
+        message = score >= 5 ? "ON FIRE 🔥" : "BUCKET!";
 
-                // Vorbei geworfen (oben am Bildschirmrand angekommen)
-                if (ball.y < -20) {
-                    score = 0;
-                    ball.speed = 3.5; // Speed-Reset
-                    resetBall(false);
+        messageTimer = 45;
+
+        flash = 8;
+
+        createParticles();
+
+        resetBall();
+    }
+
+
+    function missed() {
+
+        score = 0;
+
+        ball.speed = 4;
+
+        message = "BRICK 💀";
+
+        messageTimer = 45;
+
+        resetBall();
+    }
+
+
+    function resetBall() {
+
+        ball.y = 445;
+
+        ball.shooting = false;
+
+        ball.trail = [];
+
+        ball.dx =
+            ball.dx > 0
+                ? ball.speed
+                : -ball.speed;
+    }
+
+
+    function update() {
+
+        if (messageTimer > 0) {
+            messageTimer--;
+        }
+
+        if (flash > 0) {
+            flash--;
+        }
+
+
+        if (!ball.shooting) {
+
+            ball.x += ball.dx;
+
+            if (
+                ball.x + ball.radius >= canvas.width - 15 ||
+                ball.x - ball.radius <= 15
+            ) {
+                ball.dx *= -1;
+            }
+
+        } else {
+
+            ball.trail.push({
+                x: ball.x,
+                y: ball.y
+            });
+
+            if (ball.trail.length > 10) {
+                ball.trail.shift();
+            }
+
+            ball.y -= 13;
+
+
+            const reachesRim =
+                ball.y - ball.radius <= hoop.y + 8 &&
+                ball.y + ball.radius >= hoop.y - 12;
+
+
+            if (reachesRim) {
+
+                const inside =
+                    ball.x > hoop.x + 10 &&
+                    ball.x < hoop.x + hoop.width - 10;
+
+                if (inside) {
+                    scored();
+                    return;
                 }
+            }
+
+
+            if (ball.y < -30) {
+                missed();
             }
         }
 
-        function resetBall(scored) {
-            ball.y = 300;
-            ball.isShooting = false;
-            // Laufrichtung nach Treffer oder Fehler beibehalten, aber Speed updaten
-            ball.dx = (ball.dx > 0) ? ball.speed : -ball.speed;
+        updateParticles();
+    }
+
+
+    function draw() {
+
+        drawBackground();
+        drawHoop();
+        drawParticles();
+        drawBall();
+        drawUI();
+
+        if (flash > 0) {
+            ctx.fillStyle =
+                `rgba(255,92,0,${flash / 35})`;
+
+            ctx.fillRect(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
         }
+    }
 
-        function werfen(e) {
-            e.preventDefault(); // Verhindert Zoom/Scroll am Handy
-            if (!ball.isShooting) {
-                ball.isShooting = true;
-            }
+
+    function shoot(event) {
+
+        event.preventDefault();
+
+        if (!ball.shooting) {
+            ball.shooting = true;
         }
+    }
 
-        // Steuerung (Maus für PC, Touch für Smartphone)
-        canvas.addEventListener('mousedown', werfen);
-        canvas.addEventListener('touchstart', werfen, { passive: false });
 
-        // Game Loop
-        function gameLoop() {
-            updateGame();
-            drawGame();
-            requestAnimationFrame(gameLoop);
-        }
+    canvas.addEventListener("mousedown", shoot);
 
-        // Spiel starten
-        gameLoop();
-    </script>
+    canvas.addEventListener(
+        "touchstart",
+        shoot,
+        { passive: false }
+    );
+
+
+    function gameLoop() {
+
+        update();
+
+        draw();
+
+        requestAnimationFrame(gameLoop);
+    }
+
+
+    gameLoop();
+</script>
+
 </body>
 </html>
